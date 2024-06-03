@@ -14,14 +14,14 @@ export const useFetchProjects = () => {
   const getData = async() => {
     try {
       const response = await client.getEntries({content_type: "projects"})
-      
+      // console.log(response);
       const projects = response.items.map(item => {
         const {title, url, image} = item.fields
         const id = item.sys.id
         const img = image?.fields?.file?.url
         return {title, url, id, img}
       })
-      console.log(response);
+      // console.log(response.items);
 
       setProjects(projects)
       setLoading(false)
@@ -30,10 +30,17 @@ export const useFetchProjects = () => {
       console.log(error);
       setLoading(false)
     }
-    useEffect(() =>{
-      getData()
-    }, [])
   }
+
+  useEffect(() =>{
+    getData()
+  }, [])
+
   return {loading, projects}
 }
+
+
+// client
+//   .getEntries({content_type: "projects"})
+//   .then(response => console.log(response.items))
 
